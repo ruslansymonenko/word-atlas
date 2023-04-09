@@ -14,6 +14,7 @@
     z-index: var(--main);
     color: var(--white);
     font-family: 'Caveat', cursive;
+    transition: 0.8s ease-in-out;
     animation: showStartText 0.8s ease-in-out;
   }
 
@@ -43,6 +44,7 @@
     font-weight: 600;
     background-color: var(--light-orange);
     box-shadow: 1px 1px 5px -1px var(--dark-gray);
+    transition: .4s ease;
     cursor: pointer;
   }
 
@@ -55,7 +57,17 @@
     animation-name: rotateStartImg;
     animation-duration: 50s;
     animation-iteration-count: infinite;
+    transition: 0.8s ease-in-out;
   }
+}
+
+.start--hide-text{
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.start--hide-img {
+  opacity: 0;
 }
 
 @keyframes showStartText{
@@ -78,3 +90,9 @@
   }
 }
 
+
+@media (min-width: 1024px) {
+  .start-btn:hover{
+    transform: scale(1.02);
+  }
+}
