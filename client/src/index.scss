@@ -1,1 +1,103 @@
+html{
+  box-sizing: border-box;
+}
 
+*,
+*::after,
+**::before {
+  box-sizing: inherit;
+}
+
+ul,
+ol{
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class] {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+:root {
+  /*Colors*/
+  --dark-gray: #2d3436;
+  --light-gray: #636e72;
+
+  --white: #FFFFFF;
+
+  --dark-orange: #A6270A;
+  --light-orange: #F2603F;
+
+  --dark-green: #45D19E;
+  --light-green: #3FF2B1;
+
+
+  /*Layers*/
+  --main: 4;
+  --back: 2;
+
+
+  /*Font sizes*/
+  --small-text: 16px;
+  --small2-text: 22px;
+  --medium-text: 28px;
+  --medium2-text: 34px;
+  --large-text: 40px;
+  --large2-text: 46px;
+}
+
+/*
+font-family: 'Caveat', cursive;
+font-family: 'Roboto Mono', monospace;
+*/
+
+body{
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; 
+}
+
+.app{
+  overflow: hidden;
+}

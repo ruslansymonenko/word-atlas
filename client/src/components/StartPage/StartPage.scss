@@ -1,0 +1,80 @@
+.start{
+  position: relative;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: var(--dark-green);
+
+  &-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    z-index: var(--main);
+    color: var(--white);
+    font-family: 'Caveat', cursive;
+    animation: showStartText 0.8s ease-in-out;
+  }
+
+  &-title{
+    font-size: var(--large2-text);
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 5px 5px var(--light-gray);
+    animation: showStartText .6s ease-in-out;
+  }
+
+  &-subtitle{
+    font-size: var(--large-text);
+    font-weight: 400;
+    margin-bottom: 60px;
+    text-align: center;
+    text-shadow: 3px 3px var(--light-gray);
+  }
+
+  &-btn{
+    height: 60px;
+    width: 200px;
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 600;
+    background-color: var(--light-orange);
+    box-shadow: 1px 1px 5px -1px var(--dark-gray);
+    cursor: pointer;
+  }
+
+  &-img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translateX(10%);
+    z-index: var(--back);
+    animation-name: rotateStartImg;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes showStartText{
+  0%{
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes rotateStartImg{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
