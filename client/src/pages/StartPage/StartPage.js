@@ -30,7 +30,7 @@ const StartPage = () => {
 
   useEffect(() => {
     const handleRedirect = () => {
-      navigate('/about');
+      navigate('/check');
     }
 
     if(isLinkActive) {
@@ -50,11 +50,11 @@ const StartPage = () => {
             Discover the world of foreign languages with Word Atlas.
           </h2>
           <button 
-            className='start-btn'
+            className='start-btn button'
             onClick={handlePagesSwitch}
           >
             <Link 
-              to={isLinkActive ? '/about' : '#'}
+              to={isLinkActive ? '/check' : '#'}
             >
               Let's go
             </Link>

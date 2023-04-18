@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100vh;
   min-width: 100%;
-  background-color: var(--dark-green);
+  background-color: var(--dark-main);
 
   &-content{
     position: relative;
@@ -22,7 +22,7 @@
     font-size: var(--large2-text);
     margin-bottom: 20px;
     text-align: center;
-    text-shadow: 5px 5px var(--light-gray);
+    text-shadow: 5px 5px var(--gray);
     animation: showStartText .6s ease-in-out;
   }
 
@@ -31,21 +31,11 @@
     font-weight: 400;
     margin-bottom: 60px;
     text-align: center;
-    text-shadow: 3px 3px var(--light-gray);
+    text-shadow: 3px 3px var(--gray);
   }
 
   &-btn{
-    height: 60px;
-    width: 200px;
-    border: none;
-    border-radius: 10px;
-    color: var(--white);
-    font-size: 26px;
-    font-weight: 600;
-    background-color: var(--light-orange);
-    box-shadow: 1px 1px 5px -1px var(--dark-gray);
-    transition: .4s ease;
-    cursor: pointer;
+    background-color: var(--light-contrast);
   }
 
   &-img{

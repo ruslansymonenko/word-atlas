@@ -1,0 +1,134 @@
+.authcheck{
+  position: relative;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: var(--dark-main);
+  
+  &-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Caveat', cursive;
+    z-index: var(--main);
+    color: var(--white);
+  }
+
+  &-title{
+    text-shadow: 5px 5px var(--gray);
+    font-size: var(--large2-text);
+    animation: showStartText .6s ease-in-out;
+    margin-bottom: 40px;
+  }
+
+  &-btns{
+    display: flex;
+  }
+
+  &-btn__register{
+    color: var(--light-contrast);
+    &:hover{
+      background-color: var(--dark-contrast);
+      color: var(--white);
+    }
+  }
+
+  &-btn__login{
+    background-color: var(--light-contrast);
+    margin-right: 10px;
+    &:hover{
+      background-color: var(--white);
+      color: var(--light-contrast);
+    }
+  }
+
+  &-book__img{
+    position: absolute;
+    max-height: 300px;
+    bottom: 5%;
+    right: 5%;
+    animation: show-books 1.2s ease-in-out;
+  }
+}
+
+.authcheck-clouds__imgs{
+  display: flex;
+  justify-content: space-between;
+  height: 200px;
+  width: 100%;
+  margin-bottom: 40px;
+  transform: translateX(0%);
+  animation: move-clouds 1.2s ease-in-out;
+
+
+  &-item{
+    height: 150px;
+    min-width: 100px;
+    transition: 0.5s ease;
+    &:nth-child(even) {
+      transform: translateY(5px);
+    }
+    &:nth-child(odd) {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+@keyframes move-clouds {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes show-books {
+  0% {
+    opacity: 0;;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showStartText{
+  0%{
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+
+
+/*-------------Adaptive*/
+
+
+@media (max-width: 950px) {
+  .authcheck-clouds__imgs{
+    &-item{
+      height: 100px;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .authcheck-clouds__imgs{
+    &-item{
+      height: 70px;
+      min-width: 70px;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .authcheck-clouds__imgs{
+    &-item{
+      height: 50px;
+      min-width: 50px;
+    }
+  }
+}

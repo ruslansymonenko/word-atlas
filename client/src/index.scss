@@ -54,16 +54,16 @@ a {
 
 :root {
   /*Colors*/
-  --dark-gray: #2d3436;
-  --light-gray: #636e72;
+  --dark: #2d3436;
+  --gray: #636e72;
 
   --white: #FFFFFF;
 
-  --dark-orange: #A6270A;
-  --light-orange: #F2603F;
+  --dark-contrast: #A6270A;
+  --light-contrast: #F2603F;
 
-  --dark-green: #45D19E;
-  --light-green: #3FF2B1;
+  --dark-main: #45D19E;
+  --light-main: #3FF2B1;
 
 
   /*Layers*/
@@ -100,4 +100,18 @@ body{
 
 .app{
   overflow: hidden;
+}
+
+
+.button {
+  height: 60px;
+  width: 200px;
+  border: none;
+  border-radius: 10px;
+  color: var(--white);
+  font-size: 26px;
+  font-weight: 600;
+  box-shadow: 1px 1px 5px -1px var(--dark-gray);
+  transition: .4s ease;
+  cursor: pointer;
 }
