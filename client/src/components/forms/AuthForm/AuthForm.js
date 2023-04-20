@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './AuthForm.scss';
 
-import formValidation from '../../../utils/formValidation';
+import authFormValidation from '../../../utils/authFormValidation';
 
 const AuthForm = ({formType = 'login'}) => {
   const [form, setForm] = useState('');
@@ -11,21 +11,51 @@ const AuthForm = ({formType = 'login'}) => {
     email: '',
     password: ''
   });
+  const [inputsValidation, setInputsValidation] = useState({
+    email: true,
+    password: true
+  })
 
   const handleSendForm = (e) => {
     e.preventDefault();
-    formValidation(formData.email, formData.password);
+    const formValidation = authFormValidation(formData.email, formData.password);
+    console.log(formValidation);
+    if (formValidation.validation === true) {
+      showValidationErrors(formValidation.message, formValidation.errorField);
+      setFormData({...formData, email: '', password: ''});
+      console.log('sent data')
+    } else {
+      showValidationErrors(formValidation.message, formValidation.errorField);
+    }
   }
 
   const handleCancelForm = (e) => {
     e.preventDefault();
-    setFormData({...formData, email: '', password: ''})
+    setFormData({...formData, email: '', password: ''});
   }
 
   const handleInputChange = (e) => {
     const {name, value} = e.target;
     setFormData({...formData, [name]: value})
-    console.log(formData);
+  }
+
+  const showValidationErrors = (errorMessage, errorField) => {
+    switch (errorField) {
+      case 'email':
+        setInputsValidation({...inputsValidation, email: false, password: true})
+        break
+      case 'password':
+        setInputsValidation({...inputsValidation, email: true, password: false})
+        break
+      case 'both': 
+        setInputsValidation({...inputsValidation, email: false, password: false})
+        break
+      case '': 
+        setInputsValidation({...inputsValidation, email: true, password: true})
+        break
+      default: 
+        setInputsValidation({...inputsValidation, email: true, password: true})
+    }
   }
 
   useEffect(() => {
@@ -50,7 +80,10 @@ const AuthForm = ({formType = 'login'}) => {
       <div className="auth-form__input-container">
         <label htmlFor="email">Your email</label>
         <input 
-          className='auth-form__input auth-form__email' type="text" 
+          className={
+            inputsValidation.email ? 'auth-form__input' : 'auth-form__input auth-form__input--error'
+          } 
+          type="text" 
           name='email'
           placeholder='email'
           value={formData.email}
@@ -61,7 +94,10 @@ const AuthForm = ({formType = 'login'}) => {
       <div className="auth-form__input-container">
         <label htmlFor="password">Your password</label>
         <input 
-          className='auth-form__input auth-form__password' type="password" 
+          className={
+            inputsValidation.password ? 'auth-form__input' : 'auth-form__input auth-form__input--error'
+          } 
+          type="password" 
           name='password'
           placeholder='password'
           value={formData.password}

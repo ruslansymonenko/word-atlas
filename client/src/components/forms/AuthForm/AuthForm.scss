@@ -71,3 +71,7 @@
     }
   }
 }
+
+.auth-form__input--error {
+  box-shadow: 0px 0px 6px 4px var(--light-contrast);
+}
