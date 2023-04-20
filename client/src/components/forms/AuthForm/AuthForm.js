@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { showAlert, hideAlert } from '../../../store/slices/alertSlice'
+
+import StandartAlert from '../../alerts/StandartAlert/StandartAlert';
 
 import './AuthForm.scss';
 
@@ -14,18 +18,30 @@ const AuthForm = ({formType = 'login'}) => {
   const [inputsValidation, setInputsValidation] = useState({
     email: true,
     password: true
-  })
+  });
+
+  const dispatch = useDispatch();
 
   const handleSendForm = (e) => {
     e.preventDefault();
     const formValidation = authFormValidation(formData.email, formData.password);
-    console.log(formValidation);
+
     if (formValidation.validation === true) {
+
       showValidationErrors(formValidation.message, formValidation.errorField);
+      dispatch(showAlert({
+        message: formValidation.message, 
+        type: 'alert-standart'
+      }));
       setFormData({...formData, email: '', password: ''});
-      console.log('sent data')
+
     } else {
+
       showValidationErrors(formValidation.message, formValidation.errorField);
+      dispatch(showAlert({
+        message: formValidation.message, 
+        type: 'alert-error'
+      }));
     }
   }
 
@@ -136,6 +152,8 @@ const AuthForm = ({formType = 'login'}) => {
             "Registration page"
         }
       </Link>
+
+      <StandartAlert/>
     </form>
   )
 }
