@@ -8,7 +8,7 @@ const initialState = {
   status: null,
 }
 
-const registerUser = createAsyncThunk('auth/registerUser', async (email, password) => {
+export const registerUser = createAsyncThunk('auth/registerUser', async ({email, password}) => {
   try {
 
     const { data } = await axios.post('/auth/registration', {
@@ -27,11 +27,49 @@ const registerUser = createAsyncThunk('auth/registerUser', async (email, passwor
   }
 })
 
+export const loginUser = createAsyncThunk('auth/loginUser', async ({email, password}) => {
+  try {
+
+    const { data } = await axios.post('/auth/login', {
+      email,
+      password
+    })
+
+    if(data.token) {
+      window.localStorage.setItem('token', data.token);
+    }
+
+    return data;
+
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+
+export const getMe = createAsyncThunk('auth/getMe', async () => {
+  try {
+    const { data } = await axios.get('/auth/me')
+    return data;
+
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isLoading = false;
+      state.status = null;
+    }
+  },
   extraReducers: {
+    //Registration
     [registerUser.pending] : (state) => {
       state.isLoading = true;
       state.status = null;
@@ -46,7 +84,41 @@ export const authSlice = createSlice({
       state.status = action.payload.message;
       state.isLoading = false;
     },
+    //Login
+    [loginUser.pending] : (state) => {
+      state.isLoading = true;
+      state.status = null;
+    },
+    [loginUser.fulfilled] : (state, action) => {
+      state.isLoading = false;
+      state.status = action.payload.message;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    },
+    [loginUser.rejected] : (state, action) => {
+      state.status = action.payload.message;
+      state.isLoading = false;
+    },
+    //Authorization check
+    [getMe.pending] : (state) => {
+      state.isLoading = true;
+      state.status = null;
+    },
+    [getMe.fulfilled] : (state, action) => {
+      state.isLoading = false;
+      state.status = null;
+      state.user = action.payload?.user;
+      state.token = action.payload?.token;
+    },
+    [getMe.rejected] : (state, action) => {
+      state.status = action.payload.message;
+      state.isLoading = false;
+    },
   }
 })
+
+export const checkIsAuth = (state) => Boolean(state.auth.token);
+
+export const { logOut } = authSlice.actions;
 
 export default authSlice.reducer;

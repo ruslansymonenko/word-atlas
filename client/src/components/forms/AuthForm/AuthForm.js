@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { showAlert, hideAlert } from '../../../store/slices/alertSlice'
 
 import StandartAlert from '../../alerts/StandartAlert/StandartAlert';
@@ -8,21 +8,18 @@ import StandartAlert from '../../alerts/StandartAlert/StandartAlert';
 import './AuthForm.scss';
 
 import authFormValidation from '../../../utils/authFormValidation';
-import sendRegistrationData from '../../../utils/sendRegistrationData';
-import sendAuthData from '../../../utils/sendAuthData';
+import { registerUser, loginUser, checkIsAuth } from '../../../store/slices/authSlice';
 
 const AuthForm = ({formType = 'login'}) => {
   const [form, setForm] = useState('');
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [inputsValidation, setInputsValidation] = useState({
-    email: true,
-    password: true
-  });
+  const [formData, setFormData] = useState({email: '',password: ''});
+  const [inputsValidation, setInputsValidation] = useState({email: true, password: true});
+
+  const requestStatus = useSelector((state) => state.auth.status);
+  const isAuth = useSelector(checkIsAuth);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSendForm = (e) => {
     e.preventDefault();
@@ -30,32 +27,30 @@ const AuthForm = ({formType = 'login'}) => {
 
     if (formValidation.validation === true) {
 
-      showValidationErrors(formValidation.message, formValidation.errorField);
+      showValidationErrors(formValidation.errorField);
       sendAuthInformation();
       setFormData({...formData, email: '', password: ''});
 
     } else {
-      showValidationErrors(formValidation.message, formValidation.errorField);
+      showValidationErrors(formValidation.errorField);
       handleAlerts(formValidation.message, 'alert-error');
     }
   }
 
   const sendAuthInformation = async () => {
     if (form === 'registration') {
-      const serverResponse = await sendRegistrationData({...formData});
-      handleAlerts(serverResponse, 'alert-standart');
+      dispatch(registerUser({email: formData.email, password: formData.password}));
     } else if (form === 'login') {
-      const serverResponse = await sendAuthData({...formData});
-      handleAlerts(serverResponse, 'alert-standart');
+      dispatch(loginUser({email: formData.email, password: formData.password}));
     }
   }
 
-  const handleAlerts = (text, type) => {
+  const handleAlerts = useCallback( (text, type) => {
     dispatch(showAlert({
       message: text, 
       type: type
     }));
-  }
+  }, [dispatch])
 
   const handleCancelForm = (e) => {
     e.preventDefault();
@@ -67,7 +62,7 @@ const AuthForm = ({formType = 'login'}) => {
     setFormData({...formData, [name]: value})
   }
 
-  const showValidationErrors = (errorMessage, errorField) => {
+  const showValidationErrors = (errorField) => {
     switch (errorField) {
       case 'email':
         setInputsValidation({...inputsValidation, email: false, password: true})
@@ -92,7 +87,16 @@ const AuthForm = ({formType = 'login'}) => {
     } else {
       setForm('login');
     }
-  }, [formType])
+  }, [formType]);
+
+  useEffect(() => {
+    if (requestStatus !== null) {
+      handleAlerts(requestStatus, 'alert-standart');
+    }
+    if (isAuth) {
+      navigate('/');
+    }
+  }, [requestStatus, isAuth, handleAlerts, navigate])
 
   return (
     <form className="auth-form">

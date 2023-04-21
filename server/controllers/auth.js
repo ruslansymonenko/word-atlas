@@ -10,7 +10,7 @@ export const registration = async(req, res) => {
     const isUsed = await User.findOne({email});
 
     if(isUsed) {
-      res.status(409).json({message: 'This email is already registered'});
+      res.json({message: 'This email is already registered'});
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -80,8 +80,27 @@ export const login = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try{
+    const user = await User.findById(req.userId);
+
+    if(!user) {
+      return res.json({
+        message: 'This email is not registered!'
+      })
+    }
+
+    const token = jwtToken.sign({
+      id: user._id
+      }, 
+      process.env.JWT_SECRET,
+      {expiresIn: '30d'},
+    )
+
+    res.json({
+      user,
+      token
+    })
 
   } catch (error) {
-    console.log(error);
+    res.json({message: 'No access'})
   }
 }

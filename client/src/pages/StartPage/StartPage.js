@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { checkIsAuth } from '../../store/slices/authSlice';
 
 import './StartPage.scss';
 
 import startImg from '../../assets/images/start-page-img.png';
 
 const StartPage = () => {
+  const isAuth = useSelector(checkIsAuth);
+
   const [isLinkActive, setLinkAcitve] = useState(false);
   const [hideAnimation, setHideAnimation] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +31,7 @@ const StartPage = () => {
       startPageContent.classList.remove('start--hide-text');
       img.classList.remove('start--hide-img');
     }
-  }, [hideAnimation])
+  }, [hideAnimation]);
 
   useEffect(() => {
     const handleRedirect = () => {
@@ -37,7 +42,13 @@ const StartPage = () => {
       setTimeout(handleRedirect, 1000);
     }
 
-  }, [isLinkActive, navigate])
+  }, [isLinkActive, navigate]);
+
+  useEffect(() => {
+    if(isAuth) {
+      navigate('/main');
+    }
+  })
 
   return (
     <div className='start'>
