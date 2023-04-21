@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import authRoute from './routes/auth.route.js';
+
 dotenv.config();
 
 const app = express();
@@ -13,6 +15,8 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/auth/', authRoute);
 
 async function start () {
   try {

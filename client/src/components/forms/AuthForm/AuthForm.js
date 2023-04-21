@@ -8,6 +8,8 @@ import StandartAlert from '../../alerts/StandartAlert/StandartAlert';
 import './AuthForm.scss';
 
 import authFormValidation from '../../../utils/authFormValidation';
+import sendRegistrationData from '../../../utils/sendRegistrationData';
+import sendAuthData from '../../../utils/sendAuthData';
 
 const AuthForm = ({formType = 'login'}) => {
   const [form, setForm] = useState('');
@@ -29,20 +31,30 @@ const AuthForm = ({formType = 'login'}) => {
     if (formValidation.validation === true) {
 
       showValidationErrors(formValidation.message, formValidation.errorField);
-      dispatch(showAlert({
-        message: formValidation.message, 
-        type: 'alert-standart'
-      }));
+      sendAuthInformation();
       setFormData({...formData, email: '', password: ''});
 
     } else {
-
       showValidationErrors(formValidation.message, formValidation.errorField);
-      dispatch(showAlert({
-        message: formValidation.message, 
-        type: 'alert-error'
-      }));
+      handleAlerts(formValidation.message, 'alert-error');
     }
+  }
+
+  const sendAuthInformation = async () => {
+    if (form === 'registration') {
+      const serverResponse = await sendRegistrationData({...formData});
+      handleAlerts(serverResponse, 'alert-standart');
+    } else if (form === 'login') {
+      const serverResponse = await sendAuthData({...formData});
+      handleAlerts(serverResponse, 'alert-standart');
+    }
+  }
+
+  const handleAlerts = (text, type) => {
+    dispatch(showAlert({
+      message: text, 
+      type: type
+    }));
   }
 
   const handleCancelForm = (e) => {
