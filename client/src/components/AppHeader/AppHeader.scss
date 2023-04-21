@@ -1,0 +1,45 @@
+.app-header{
+  height: 100px;
+  padding: 10px 40px;
+  border-bottom: 1px solid var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__title{
+    height: 50%;
+    font-size: 46px;
+    font-family: 'Caveat', cursive;
+    text-shadow: 2px 2px var(--gray);
+    color: var(--dark-main);
+  }
+
+  &__user{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__user-info{
+    display: flex;
+    align-items: center;
+  }
+}
+
+.header-user__img{
+  height: 40px;
+  width: 40px;
+  margin-right: 40px;
+  overflow: hidden;
+}
+
+.user-controllers__logout{
+  height: 58px;
+  width: 58px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

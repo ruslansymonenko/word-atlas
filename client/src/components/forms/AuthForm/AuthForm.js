@@ -50,6 +50,10 @@ const AuthForm = ({formType = 'login'}) => {
       message: text, 
       type: type
     }));
+
+    setTimeout(() => {
+      dispatch(hideAlert());
+    }, 1500)
   }, [dispatch])
 
   const handleCancelForm = (e) => {
@@ -92,9 +96,11 @@ const AuthForm = ({formType = 'login'}) => {
   useEffect(() => {
     if (requestStatus !== null) {
       handleAlerts(requestStatus, 'alert-standart');
-    }
-    if (isAuth) {
-      navigate('/');
+      setTimeout(() => {
+        if (isAuth) {
+          navigate('/');
+        }
+      }, 1600)
     }
   }, [requestStatus, isAuth, handleAlerts, navigate])
 

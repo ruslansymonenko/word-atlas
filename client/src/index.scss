@@ -63,7 +63,6 @@ a {
   --light-contrast: #F2603F;
 
   --dark-main: #45D19E;
-  --light-main: #3FF2B1;
 
   --main-back: #dfe6e9;
 
@@ -104,6 +103,10 @@ body{
 
 .app{
   overflow: hidden;
+}
+
+.app-conainer{
+  min-height: 100vh;
 }
 
 

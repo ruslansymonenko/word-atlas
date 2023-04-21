@@ -1,5 +1,5 @@
-import {Outlet} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
 import { checkIsAuth } from '../store/slices/authSlice';
 
@@ -10,7 +10,7 @@ const Layout = () => {
   const isAuth = useSelector(checkIsAuth);
 
   return (
-    <div>
+    <div className='app-container'>
       {
         isAuth ? (
           <MainPage/>
