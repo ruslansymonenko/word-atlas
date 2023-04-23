@@ -16,7 +16,7 @@ export const registration = async(req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const user = new User({email, password: hash});
+    const user = new User({email, password: hash, nickName: ''});
 
     const token = jwtToken.sign({
       id: user._id

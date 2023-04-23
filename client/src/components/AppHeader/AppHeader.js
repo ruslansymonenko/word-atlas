@@ -3,20 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { checkIsAuth, logOut } from '../../store/slices/authSlice';
+import { showModal } from '../../store/slices/userDataModalSlice';
 
 import './AppHeader.scss';
 
 import userImg from '../../assets/icons/user-img.svg';
 import logOutImg from '../../assets/icons/log-out.svg';
+import editImg from '../../assets/icons/edit-img.svg';
 
 const AppHeader = () => {
   const isAuth = useSelector(checkIsAuth);
   const dispath = useDispatch();
   const navigate = useNavigate();
 
+  const userName = useSelector(state => state.auth.user.email);
+
   const handleLogOut = () => {
     dispath(logOut());
     window.localStorage.removeItem('token');
+  }
+
+  const showUserData = () => {
+    dispath(showModal());
   }
 
   useEffect(() => {
@@ -37,8 +45,14 @@ const AppHeader = () => {
             <img className="header-user__img-item" src={userImg} alt="user-img" />
           </div>
           <h2 className='header-user__name'>
-            Hello, User
+            Hello, {userName}
           </h2>
+          <button 
+            className='header-user_name-btn'
+            onClick={showUserData}
+            >
+            <img className='header-user_name-img' src={editImg} alt="change-name" />
+          </button>
         </div>
         <div className="app-header__user-controllers">
           <button 

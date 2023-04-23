@@ -29,6 +29,10 @@
   }
 }
 
+.header-user__name {
+  margin-right: 20px;
+}
+
 .header-user__img{
   height: 40px;
   width: 40px;
@@ -42,4 +46,19 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.header-user_name-btn{
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+}
+
+.header-user_name-img{
+  max-height: 100%;
 }

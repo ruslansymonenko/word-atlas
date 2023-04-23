@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { checkIsAuth } from '../../store/slices/authSlice';
 
 import AppHeader from '../../components/AppHeader/AppHeader';
+import UserDataModal from '../../components/modals/UserData/UserDataModal';
 
 import './MainPage.scss';
 
@@ -22,6 +23,8 @@ const MainPage = () => {
   return (
     <div className='main'>
       <AppHeader/>
+
+      <UserDataModal/>
     </div>
   )
 }

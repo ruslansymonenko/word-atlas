@@ -70,6 +70,7 @@ a {
   /*Layers*/
   --main: 4;
   --back: 2;
+  --modal: 20;
 
 
   /*Font sizes*/
@@ -121,4 +122,50 @@ body{
   box-shadow: 1px 1px 5px -1px var(--dark-gray);
   transition: .4s ease;
   cursor: pointer;
+}
+
+.modal-container{
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(154, 160, 162, 0.329);
+  height: 100vh;
+  width: 100%;
+  z-index: var(--modal);
+  transition: .4s ease;
+
+  &--active{
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(200%, -50%);
+  background-color: #5dd3a8;
+  height: 500px;
+  width: 600px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px -1px black;
+  transition: .6s ease;
+
+  &-close__btn{
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    height: 45px;
+    width: 45px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &--active{
+    transform: translate(-50%, -50%);
+  }
 }
