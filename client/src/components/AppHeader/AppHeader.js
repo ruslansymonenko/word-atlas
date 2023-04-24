@@ -11,12 +11,10 @@ import userImg from '../../assets/icons/user-img.svg';
 import logOutImg from '../../assets/icons/log-out.svg';
 import editImg from '../../assets/icons/edit-img.svg';
 
-const AppHeader = () => {
+const AppHeader = ({userEmail, userNickName}) => {
   const isAuth = useSelector(checkIsAuth);
   const dispath = useDispatch();
   const navigate = useNavigate();
-
-  const userName = useSelector(state => state.auth.user.email);
 
   const handleLogOut = () => {
     dispath(logOut());
@@ -45,7 +43,10 @@ const AppHeader = () => {
             <img className="header-user__img-item" src={userImg} alt="user-img" />
           </div>
           <h2 className='header-user__name'>
-            Hello, {userName}
+            Hello, 
+            {
+              userNickName ? userNickName : userEmail
+            }
           </h2>
           <button 
             className='header-user_name-btn'

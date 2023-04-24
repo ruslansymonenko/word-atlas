@@ -3,16 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { hideModal } from '../../../store/slices/userDataModalSlice';
 
+import { getDate } from '../../../utils/getDate';
+
 import './UserDataModal.scss';
 
 import closeImg from '../../../assets/icons/close-img.svg';
 import userImg from '../../../assets/icons/user-img.svg';
 
-const UserData = () => {
+const UserData = ({userEmail, userNickName, timestamp}) => {
   const dispath = useDispatch();
   const modalVisibility = useSelector(state => state.userDataModal.visibility);
 
-  const userEmail = useSelector(state => state.auth.user.email);
+  const registrationDate = getDate(timestamp);
 
   const closeModal = () => {
     dispath(hideModal())
@@ -35,13 +37,18 @@ const UserData = () => {
           <div className="user-data__modal-photo">
             <img className='user-data__modal-img' src={userImg} alt="user img"/>
           </div>
-          <button className='button user-data__modal-btn'>
-            Change
-          </button>
+          <div className="button user-data__modal-btn">
+            <label htmlFor="user-photo">
+              Change
+              <input id="user-photo" type='file' style={{display: 'none'}} />
+            </label>
+          </div>
         </div>
         <div className="user-data__modal-row">
           <span className='user-data__modal-nickname'>
-            Nickname
+            {
+              userNickName ? userNickName : 'Put your nickname here...'
+            }
           </span>
           <button className='button user-data__modal-btn'>
             Change
@@ -57,7 +64,7 @@ const UserData = () => {
             Registration date
           </h3>
           <span className='user-data__modal-date'>
-              23.04.23
+              {registrationDate}
           </span>
         </div>
         <button className='button user-data__modal-save'>

@@ -14,6 +14,9 @@ const MainPage = () => {
   const isAuth = useSelector(checkIsAuth);
   const navigate = useNavigate();
 
+  const {email, nickName, createdAt} = useSelector(state => state.auth.user);
+
+
   useEffect(() => {
     if(isAuth) {
       navigate('/');
@@ -22,9 +25,16 @@ const MainPage = () => {
 
   return (
     <div className='main'>
-      <AppHeader/>
+      <AppHeader
+        userEmail={email}
+        userNickName = {nickName}
+      />
 
-      <UserDataModal/>
+      <UserDataModal
+        userEmail={email}
+        userNickName = {nickName}
+        timestamp={createdAt}
+      />
     </div>
   )
 }
