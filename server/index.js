@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import authRoute from './routes/auth.route.js';
+import setUserData from './routes/setUserData.route.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth/', authRoute);
+app.use('/api/user/', setUserData);
 
 async function start () {
   try {

@@ -48,7 +48,7 @@ const StartPage = () => {
     if(isAuth) {
       navigate('/main');
     }
-  })
+  }, [navigate, isAuth])
 
   return (
     <div className='start'>
