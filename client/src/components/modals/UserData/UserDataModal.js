@@ -47,7 +47,7 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
         <div className="user-data__modal-row">
           <span className='user-data__modal-nickname'>
             {
-              userNickName ? userNickName : 'Put your nickname here...'
+              userNickName ? userNickName : 'Add nickname...'
             }
           </span>
           <button className='button user-data__modal-btn'>

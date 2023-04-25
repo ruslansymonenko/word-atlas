@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkIsAuth } from '../../store/slices/authSlice';
 import { getUserData } from '../../store/slices/userDataSlice'
 
+
 import AppHeader from '../../components/AppHeader/AppHeader';
 import UserDataModal from '../../components/modals/UserData/UserDataModal';
 
@@ -16,8 +17,12 @@ const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {email, nickName, createdAt} = useSelector(state => state.auth.user);
-  dispatch(getUserData());
+  // const {email, nickName, createdAt} = useSelector(state => state.auth.user);
+  const userData = useSelector(state => state.userData.user);
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, []);
 
   useEffect(() => {
     if(isAuth) {
@@ -27,16 +32,20 @@ const MainPage = () => {
 
   return (
     <div className='main'>
-      <AppHeader
-        userEmail={email}
-        userNickName = {nickName}
-      />
+      {userData ? (
+        <>
+          <AppHeader
+            userEmail={userData.email}
+            userNickName={userData.nickName}
+          />
 
-      <UserDataModal
-        userEmail={email}
-        userNickName = {nickName}
-        timestamp={createdAt}
-      />
+          <UserDataModal
+            userEmail={userData.email}
+            userNickName={userData.nickName}
+            timestamp={userData.createdAt}
+          />
+        </>
+      ) : <h1>Hello</h1>}
     </div>
   )
 }

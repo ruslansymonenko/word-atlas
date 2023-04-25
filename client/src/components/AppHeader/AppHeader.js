@@ -11,7 +11,7 @@ import userImg from '../../assets/icons/user-img.svg';
 import logOutImg from '../../assets/icons/log-out.svg';
 import editImg from '../../assets/icons/edit-img.svg';
 
-const AppHeader = ({userEmail, userNickName}) => {
+const AppHeader = ({userEmail = 'email', userNickName = 'nickname'}) => {
   const isAuth = useSelector(checkIsAuth);
   const dispath = useDispatch();
   const navigate = useNavigate();

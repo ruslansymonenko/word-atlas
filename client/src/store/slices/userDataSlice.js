@@ -3,11 +3,12 @@ import axios from '../../utils/axios';
 
 
 const initialState = {
-  message: ''
+  user: null,
+  isLoading: false,
+  status: null
 }
 
 export const getUserData = createAsyncThunk('userData/getUserData', async () => {
-  console.log('redux function is work')
   try {
     const { data } = await axios.get('/user/getUser')
     return data;
@@ -23,15 +24,20 @@ export const userDataSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getUserData.pending] : (state) => {
+      state.isLoading = true;
+      state.status = null;
     },
     [getUserData.fulfilled] : (state, action) => {
-      state.message = action.payload?.message
+      state.isLoading = false;
+      state.status = null;
+      state.user = action.payload?.user;
+      state.token = action.payload?.token;
     },
     [getUserData.rejected] : (state, action) => {
-
+      state.status = action.payload.message;
+      state.isLoading = false;
     },
   }
 })
-
 
 export default userDataSlice.reducer;
