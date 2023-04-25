@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkIsAuth } from '../../store/slices/authSlice';
 import { getUserData } from '../../store/slices/userDataSlice'
 
-
 import AppHeader from '../../components/AppHeader/AppHeader';
 import UserDataModal from '../../components/modals/UserData/UserDataModal';
+import MainLoader from '../../components/loaders/MainLoader/MainLoader';
 
 import './MainPage.scss';
 
@@ -17,7 +17,6 @@ const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const {email, nickName, createdAt} = useSelector(state => state.auth.user);
   const userData = useSelector(state => state.userData.user);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const MainPage = () => {
             timestamp={userData.createdAt}
           />
         </>
-      ) : <h1>Hello</h1>}
+      ) : <MainLoader/>}
     </div>
   )
 }
