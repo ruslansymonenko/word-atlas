@@ -64,10 +64,16 @@
     color: var(--dark);
     background-color: white;
   }
+
   &-save{
     font-size: 16px;
     height: 40px;
     width: 160px;
+    background-color: var(--gray);
+    cursor:help;
+  }
+
+  &-save--active{
     background-color: var(--light-contrast);
   }
 }

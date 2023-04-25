@@ -1,7 +1,9 @@
 
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { hideModal } from '../../../store/slices/userDataModalSlice';
+import { showAlert } from '../../../store/slices/alertSlice';
 
 import { getDate } from '../../../utils/getDate';
 
@@ -14,11 +16,48 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
   const dispath = useDispatch();
   const modalVisibility = useSelector(state => state.userDataModal.visibility);
 
+  const [modalData, setModalData] = useState({
+    photoUrl: userImg,
+    nickName: userNickName,
+  });
+  const [isChanged, setIsChanged] = useState(false);
+
   const registrationDate = getDate(timestamp);
 
   const closeModal = () => {
     dispath(hideModal())
   }
+
+  const handleSaveChanges = () => {
+    if (isChanged === false) {
+      handleAlerts('You made no changes', 'alert-error')
+    } else if (isChanged === true) {
+      handleAlerts('Your changes has been saved', 'alert-standart')
+    }
+  }
+
+  const handleAlerts = (text, type) => {
+    dispath(showAlert({
+      message: text,
+      type: type
+    }));
+  }
+
+  useEffect(() => {
+    const initialModalData = {
+      photoUrl: userImg,
+      nickName: userNickName,
+    };
+    if (
+      modalData.photoUrl !== initialModalData.photoUrl ||
+      modalData.nickName !== initialModalData.nickName
+    ) {
+      setIsChanged(true);
+    } else {
+      setIsChanged(false);
+    }
+  }, [modalData, userNickName]);
+
 
   return (
     <div 
@@ -67,7 +106,10 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
               {registrationDate}
           </span>
         </div>
-        <button className='button user-data__modal-save'>
+        <button 
+          className='button user-data__modal-save'
+          onClick={handleSaveChanges}
+        >
             Save changes
         </button>
 

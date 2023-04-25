@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+/*
+  Available types for alert: 
+  - alert-standart
+  - alert-error
+*/
+
 export const alertSlice = createSlice({
   name: 'alert',
   initialState: {
@@ -9,9 +15,15 @@ export const alertSlice = createSlice({
   },
   reducers: {
     showAlert: (state, action) => {
-      state.message = action.payload.message;
-      state.type = action.payload.type;
-      state.active = true;
+      if (action.payload) {
+        state.message = action.payload.message;
+        state.type = action.payload.type;
+        state.active = true;
+      } else {
+        state.message = 'Some error...';
+        state.type = 'alert-error';
+        state.active = true;
+      }
     },
     hideAlert: (state) => {
       state.message = '';

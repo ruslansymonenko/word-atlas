@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const userDataModalSlice = createSlice({
   name: 'userDataModal',
   initialState: {
-    visibility: false
+    visibility: true
   },
   reducers: {
     showModal: (state) => {

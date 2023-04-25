@@ -9,6 +9,7 @@ import { getUserData } from '../../store/slices/userDataSlice'
 import AppHeader from '../../components/AppHeader/AppHeader';
 import UserDataModal from '../../components/modals/UserData/UserDataModal';
 import MainLoader from '../../components/loaders/MainLoader/MainLoader';
+import StandartAlert from '../../components/alerts/StandartAlert/StandartAlert';
 
 import './MainPage.scss';
 
@@ -43,6 +44,8 @@ const MainPage = () => {
             userNickName={userData.nickName}
             timestamp={userData.createdAt}
           />
+
+          <StandartAlert/>
         </>
       ) : <MainLoader/>}
     </div>
