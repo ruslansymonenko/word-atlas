@@ -1,0 +1,33 @@
+.words-lists__item{
+  min-height: 40px;
+  width: 90%;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+  box-shadow: 2px 3px 12px -4px rgba(0,0,0,0.75);
+  overflow: hidden;
+  margin-bottom: 15px;
+
+
+  &-text{
+    text-align: center;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  &-btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+  }
+
+  &-img{
+    height: 30px;
+    width: 30px;
+  }
+}

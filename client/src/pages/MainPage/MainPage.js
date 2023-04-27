@@ -7,6 +7,7 @@ import { checkIsAuth } from '../../store/slices/authSlice';
 import { getUserData } from '../../store/slices/userDataSlice'
 
 import AppHeader from '../../components/AppHeader/AppHeader';
+import AppContent from '../../components/AppContent/AppContent';
 import UserDataModal from '../../components/modals/UserData/UserDataModal';
 import MainLoader from '../../components/loaders/MainLoader/MainLoader';
 import StandartAlert from '../../components/alerts/StandartAlert/StandartAlert';
@@ -38,6 +39,8 @@ const MainPage = () => {
             userEmail={userData.email}
             userNickName={userData.nickName}
           />
+
+          <AppContent/>
 
           <UserDataModal
             userEmail={userData.email}

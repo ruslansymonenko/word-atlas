@@ -1,11 +1,19 @@
 .app-header{
-  height: 100px;
-  padding: 10px 40px;
-  border-bottom: 1px solid var(--dark);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid var(--dark);
+  height: 100px;
+  width: 100%;
+  padding: 15px 40px;
+  margin-bottom: 20px;
+  
+  &__content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
   &__title{
     height: 50%;
@@ -61,4 +69,14 @@
 
 .header-user_name-img{
   max-height: 100%;
+}
+
+
+//Adaptivity
+
+@media (max-width: 890px) {
+  .app-header__title{
+    margin-bottom: 20px;
+    font-size: 36px;
+  }
 }

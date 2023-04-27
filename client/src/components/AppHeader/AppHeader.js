@@ -34,34 +34,38 @@ const AppHeader = ({userEmail = 'email', userNickName = 'nickname'}) => {
 
   return (
     <header className='app-header'>
-      <h1 className='app-header__title'>
-        Word Atlas
-      </h1>
-      <div className="app-header__user">
-        <div className="app-header__user-info">
-          <div className="header-user__img">
-            <img className="header-user__img-item" src={userImg} alt="user-img" />
+      <div className="container">
+        <div className="app-header__content">
+          <h1 className='app-header__title'>
+            Word Atlas
+          </h1>
+          <div className="app-header__user">
+            <div className="app-header__user-info">
+              <div className="header-user__img">
+                <img className="header-user__img-item" src={userImg} alt="user-img" />
+              </div>
+              <h2 className='header-user__name'>
+                Hello, 
+                {
+                  userNickName ? userNickName : userEmail
+                }
+              </h2>
+              <button 
+                className='header-user_name-btn'
+                onClick={showUserData}
+                >
+                <img className='header-user_name-img' src={editImg} alt="change-name" />
+              </button>
+            </div>
+            <div className="app-header__user-controllers">
+              <button 
+              className='user-controllers__logout'
+              onClick={handleLogOut}
+              >
+                <img src={logOutImg} alt="log out" />
+              </button>
+            </div>
           </div>
-          <h2 className='header-user__name'>
-            Hello, 
-            {
-              userNickName ? userNickName : userEmail
-            }
-          </h2>
-          <button 
-            className='header-user_name-btn'
-            onClick={showUserData}
-            >
-            <img className='header-user_name-img' src={editImg} alt="change-name" />
-          </button>
-        </div>
-        <div className="app-header__user-controllers">
-          <button 
-          className='user-controllers__logout'
-          onClick={handleLogOut}
-          >
-            <img src={logOutImg} alt="log out" />
-          </button>
         </div>
       </div>
     </header>
