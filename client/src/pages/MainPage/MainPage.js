@@ -43,6 +43,7 @@ const MainPage = () => {
             userEmail={userData.email}
             userNickName={userData.nickName}
             timestamp={userData.createdAt}
+            userId={userData._id}
           />
 
           <StandartAlert/>

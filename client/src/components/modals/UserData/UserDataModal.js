@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { hideModal } from '../../../store/slices/userDataModalSlice';
 import { showAlert } from '../../../store/slices/alertSlice';
+import { setUserNickName } from '../../../store/slices/userDataSlice';
 
 import { getDate } from '../../../utils/getDate';
 
@@ -12,17 +13,26 @@ import './UserDataModal.scss';
 import closeImg from '../../../assets/icons/close-img.svg';
 import userImg from '../../../assets/icons/user-img.svg';
 
-const UserData = ({userEmail, userNickName, timestamp}) => {
+const UserData = ({
+    userEmail, 
+    userNickName, 
+    timestamp,
+    userId
+  }) => {
   const dispath = useDispatch();
   const modalVisibility = useSelector(state => state.userDataModal.visibility);
 
   const [modalData, setModalData] = useState({
     photoUrl: userImg,
-    nickName: userNickName,
+    nickName: '',
+    userId: userId
   });
   const [isChanged, setIsChanged] = useState(false);
+  const [shouldWatchChanges, setShouldWatchChanges] = useState(false);
+  const [isNicknameChanging, setIsNicknameChanging] = useState(false);
 
   const registrationDate = getDate(timestamp);
+
 
   const closeModal = () => {
     dispath(hideModal())
@@ -30,10 +40,22 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
 
   const handleSaveChanges = () => {
     if (isChanged === false) {
-      handleAlerts('You made no changes', 'alert-error')
+      handleAlerts('You made no changes', 'alert-error');
     } else if (isChanged === true) {
-      handleAlerts('Your changes has been saved', 'alert-standart')
+      if(isNicknameChanging) {
+        handleAlerts('Save changes first', 'alert-error');
+      } else {
+        sendChanges(modalData, userId);
+        handleAlerts('Your changes has been saved', 'alert-standart');
+      }
     }
+  }
+
+  const sendChanges = ({photoUrl, nickName, userId}) => {
+    dispath(setUserNickName({
+      nickname: nickName,
+      userId: userId
+    }));
   }
 
   const handleAlerts = (text, type) => {
@@ -43,20 +65,26 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
     }));
   }
 
+  const handleNicknameChanges = () => {
+    setIsNicknameChanging(!isNicknameChanging);
+    setShouldWatchChanges(true);
+  }
+
   useEffect(() => {
-    const initialModalData = {
-      photoUrl: userImg,
-      nickName: userNickName,
-    };
-    if (
-      modalData.photoUrl !== initialModalData.photoUrl ||
-      modalData.nickName !== initialModalData.nickName
-    ) {
+    if(userNickName) {
+      setModalData({...modalData, nickName: userNickName})
+    } else {
+      setModalData({...modalData, nickName: 'Add your nickname...'});
+    }
+  }, []);
+
+  useEffect(() => {
+    if(shouldWatchChanges) {
       setIsChanged(true);
     } else {
       setIsChanged(false);
     }
-  }, [modalData, userNickName]);
+  }, [shouldWatchChanges]);
 
 
   return (
@@ -79,18 +107,27 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
           <div className="button user-data__modal-btn">
             <label htmlFor="user-photo">
               Change
-              <input id="user-photo" type='file' style={{display: 'none'}} />
+              <input id="user-photo" 
+              type='file' 
+              style={{display: 'none'}} />
             </label>
           </div>
         </div>
         <div className="user-data__modal-row">
-          <span className='user-data__modal-nickname'>
-            {
-              userNickName ? userNickName : 'Add nickname...'
-            }
-          </span>
-          <button className='button user-data__modal-btn'>
-            Change
+          <input 
+            className={
+              isNicknameChanging ? 'user-data__modal-nickname user-data__modal-nickname--active' : 'user-data__modal-nickname'
+            } 
+            type="text" 
+            readOnly={!isNicknameChanging}
+            value={modalData.nickName}
+            onChange={(e) => setModalData({...modalData, nickName: e.target.value})}
+          />
+          <button 
+            className='button user-data__modal-btn'
+            onClick={handleNicknameChanges}
+          >
+            {isNicknameChanging ? 'Save' : 'Change'}
           </button>
         </div>
         <div className="user-data__modal-row">
@@ -107,7 +144,9 @@ const UserData = ({userEmail, userNickName, timestamp}) => {
           </span>
         </div>
         <button 
-          className='button user-data__modal-save'
+          className={
+            isChanged ? 'button user-data__modal-save user-data__modal-save--active' : 'button user-data__modal-save'
+          }
           onClick={handleSaveChanges}
         >
             Save changes

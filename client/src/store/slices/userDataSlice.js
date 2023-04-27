@@ -17,6 +17,16 @@ export const getUserData = createAsyncThunk('userData/getUserData', async () => 
   }
 });
 
+export const setUserNickName = createAsyncThunk('userData/setUserNickName', async ({nickname, userId}) => {
+  try {
+    const { data } = await axios.post('/user/setNickName', {nickname, userId});
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 
 export const userDataSlice = createSlice({
   name: 'userData',

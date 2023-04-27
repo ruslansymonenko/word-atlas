@@ -28,6 +28,15 @@ export const getUserData = async (req, res) => {
   }
 }
 
-export const setUserNickName = () => {
-  console.log('yes');
+export const setUserNickName = async (req, res) => {
+  const receivedNickName = req.body.nickname;
+
+  try {
+    await User.findByIdAndUpdate(req.body.userId, {nickName: receivedNickName});
+
+  } catch (err) {
+    res.json({message: 'Some error, please try later..'})
+  }
+
+  res.json({message: 'Yor data received'});
 }
